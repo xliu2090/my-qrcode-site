@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刘兴凯 - 创意设计进化版</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300;400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(30,30,60,0.8), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(60,20,60,0.6), transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(20,60,60,0.4), transparent 70%),
+                #0a0a0a;
+            font-family: 'Noto Sans SC', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        /* 动态网格背景 */
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 80px 80px;
+            animation: gridShift 25s linear infinite;
+            z-index: 1;
+        }
+        
+        @keyframes gridShift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(80px, 80px); }
+        }
+        
+        /* 能量波纹 */
+        .energy-ring {
+            position: absolute;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: energyPulse 8s ease-in-out infinite;
+        }
+        
+        .energy-ring:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 0s;
+        }
+        
+        .energy-ring:nth-child(2) {
+            width: 600px;
+            height: 600px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -2s;
+        }
+        
+        .energy-ring:nth-child(3) {
+            width: 800px;
+            height: 800px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -4s;
+        }
+        
+        @keyframes energyPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+                border-color: rgba(255,255,255,0.1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 0.8;
+                border-color: rgba(255,255,255,0.4);
+            }
+        }
+        
+        .container {
+            position: relative;
+            perspective: 1500px;
+            transform-style: preserve-3d;
+            z-index: 10;
+        }
+        
+        .name-container {
+            position: relative;
+            display: flex;
+            gap: 25px;
+            transform-style: preserve-3d;
+        }
+        
+        .character {
+            position: relative;
+            font-size: 13rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, 
+                #ffffff 0%, 
+                #f0f0f0 25%, 
+                #ffffff 50%, 
+                #e0e0e0 75%, 
+                #ffffff 100%);
+            background-size: 300% 300%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 
+                0 0 30px rgba(255,255,255,0.4),
+                0 0 60px rgba(255,255,255,0.2),
+                0 0 120px rgba(255,255,255,0.1),
+                0 10px 20px rgba(0,0,0,0.3);
+            transform-style: preserve-3d;
+            animation: 
+                gradientMove 6s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.1));
+        }
+        
+        .character:nth-child(1) {
+            animation-delay: 0s;
+            transform: rotateY(-20deg) rotateX(8deg) translateZ(20px);
+        }
+        
+        .character:nth-child(2) {
+            animation-delay: -2s;
+            transform: rotateY(0deg) rotateX(-6deg) translateZ(40px);
+        }
+        
+        .character:nth-child(3) {
+            animation-delay: -4s;
+            transform: rotateY(20deg) rotateX(8deg) translateZ(20px);
+        }
+        
+        @keyframes characterFloat {
+            0%, 100% { transform: translateY(0px) rotateX(0deg) rotateZ(0deg); }
+            25% { transform: translateY(-25px) rotateX(3deg) rotateZ(1deg); }
+            50% { transform: translateY(15px) rotateX(-2deg) rotateZ(-0.5deg); }
+            75% { transform: translateY(-10px) rotateX(1deg) rotateZ(0.5deg); }
+        }
+        
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes subtleGlow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 30px rgba(255,255,255,0.2));
+            }
+            50% { 
+                filter: drop-shadow(0 0 50px rgba(255,255,255,0.4));
+            }
+        }
+        
+        /* 增强的3D层次 */
+        .character::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, 
+                rgba(255,255,255,0.6) 0%, 
+                rgba(200,200,200,0.4) 50%, 
+                rgba(255,255,255,0.6) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            transform: translateZ(-20px) scale(1.03) translateX(3px) translateY(3px);
+            opacity: 0.6;
+            filter: blur(1px);
+        }
+        
+        .character::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, 
+                rgba(150,150,150,0.4) 0%, 
+                rgba(100,100,100,0.3) 50%, 
+                rgba(150,150,150,0.4) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            transform: translateZ(-40px) scale(1.06) translateX(6px) translateY(6px);
+            opacity: 0.3;
+            filter: blur(2px);
+        }
+        
+        .character:hover {
+            transform: scale(1.15) rotateY(15deg) rotateX(10deg) translateZ(80px);
+            text-shadow: 
+                0 0 50px rgba(255,255,255,0.6),
+                0 0 100px rgba(255,255,255,0.4),
+                0 0 200px rgba(255,255,255,0.2);
+            filter: drop-shadow(0 0 60px rgba(255,255,255,0.5));
+            animation-play-state: paused;
+        }
+        
+        /* 增强的背景几何元素 */
+        .bg-element {
+            position: absolute;
+            border: 2px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            animation: complexRotate 30s linear infinite;
+            backdrop-filter: blur(5px);
+        }
+        
+        .bg-element:nth-child(1) {
+            width: 250px;
+            height: 250px;
+            top: 8%;
+            left: 8%;
+            animation-duration: 35s;
+            border-color: rgba(255,255,255,0.1);
+        }
+        
+        .bg-element:nth-child(2) {
+            width: 180px;
+            height: 180px;
+            top: 65%;
+            right: 12%;
+            animation-duration: 40s;
+            animation-direction: reverse;
+            border-color: rgba(255,255,255,0.06);
+        }
+        
+        .bg-element:nth-child(3) {
+            width: 120px;
+            height: 120px;
+            top: 25%;
+            right: 25%;
+            animation-duration: 45s;
+            border-color: rgba(255,255,255,0.12);
+        }
+        
+        .bg-element:nth-child(4) {
+            width: 300px;
+            height: 80px;
+            top: 80%;
+            left: 20%;
+            animation-duration: 50s;
+            border-radius: 40px;
+            border-color: rgba(255,255,255,0.04);
+        }
+        
+        @keyframes complexRotate {
+            0% {
+                transform: rotate(0deg) scale(1) translateX(0px);
+                opacity: 0.1;
+            }
+            25% {
+                opacity: 0.4;
+                transform: rotate(90deg) scale(1.1) translateX(20px);
+            }
+            50% {
+                opacity: 0.6;
+                transform: rotate(180deg) scale(1.2) translateX(0px);
+            }
+            75% {
+                opacity: 0.4;
+                transform: rotate(270deg) scale(1.1) translateX(-20px);
+            }
+            100% {
+                transform: rotate(360deg) scale(1) translateX(0px);
+                opacity: 0.1;
+            }
+        }
+        
+        /* 增强的光线系统 */
+        .light-beam {
+            position: absolute;
+            width: 3px;
+            height: 120vh;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                rgba(255,255,255,0.05) 20%,
+                rgba(255,255,255,0.2) 40%,
+                rgba(255,255,255,0.4) 50%,
+                rgba(255,255,255,0.2) 60%,
+                rgba(255,255,255,0.05) 80%,
+                transparent 100%);
+            animation: enhancedBeam 12s ease-in-out infinite;
+            border-radius: 2px;
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+        
+        .light-beam:nth-child(1) {
+            left: 15%;
+            animation-delay: 0s;
+            transform: rotate(5deg);
+        }
+        
+        .light-beam:nth-child(2) {
+            left: 45%;
+            animation-delay: -4s;
+            transform: rotate(-3deg);
+        }
+        
+        .light-beam:nth-child(3) {
+            left: 75%;
+            animation-delay: -8s;
+            transform: rotate(7deg);
+        }
+        
+        .light-beam:nth-child(4) {
+            left: 85%;
+            animation-delay: -6s;
+            transform: rotate(-2deg);
+            width: 2px;
+        }
+        
+        @keyframes enhancedBeam {
+            0%, 100% {
+                opacity: 0;
+                transform: translateX(-80px) rotate(5deg);
+            }
+            25% {
+                opacity: 0.6;
+                transform: translateX(40px) rotate(5deg);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(0px) rotate(5deg);
+            }
+            75% {
+                opacity: 0.6;
+                transform: translateX(-40px) rotate(5deg);
+            }
+        }
+        
+        /* 高级粒子系统 */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .particle.type-a {
+            width: 3px;
+            height: 3px;
+            background: radial-gradient(circle, rgba(255,255,255,0.8), transparent);
+            animation: particleFloatA 6s linear infinite;
+        }
+        
+        .particle.type-b {
+            width: 2px;
+            height: 2px;
+            background: radial-gradient(circle, rgba(255,255,255,0.6), transparent);
+            animation: particleFloatB 8s linear infinite;
+        }
+        
+        .particle.type-c {
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, rgba(255,255,255,0.4), transparent);
+            animation: particleFloatC 10s linear infinite;
+        }
+        
+        @keyframes particleFloatA {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) translateX(0) scale(0) rotate(0deg);
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                opacity: 0;
+                transform: translateY(-20vh) translateX(50px) scale(1.5) rotate(180deg);
+            }
+        }
+        
+        @keyframes particleFloatB {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) translateX(0) scale(0) rotate(0deg);
+            }
+            15% { opacity: 1; }
+            85% { opacity: 1; }
+            100% {
+                opacity: 0;
+                transform: translateY(-10vh) translateX(-30px) scale(1.2) rotate(-120deg);
+            }
+        }
+        
+        @keyframes particleFloatC {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) translateX(0) scale(0) rotate(0deg);
+            }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% {
+                opacity: 0;
+                transform: translateY(-15vh) translateX(80px) scale(1.8) rotate(240deg);
+            }
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .character {
+                font-size: 9rem;
+            }
+            .name-container {
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .character {
+                font-size: 7rem;
+            }
+            .name-container {
+                gap: 10px;
+            }
+        }
+        
+        /* 鼠标交互增强 */
+        .container:hover .character {
+            animation-play-state: paused;
+        }
+        
+        /* 震撼的点击效果 */
+        .explosion-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #ffffff, transparent);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 网格背景 -->
+    <div class="grid-overlay"></div>
+    
+    <!-- 能量环 -->
+    <div class="energy-ring"></div>
+    <div class="energy-ring"></div>
+    <div class="energy-ring"></div>
+    
+    <!-- 增强的背景光线 -->
+    <div class="light-beam"></div>
+    <div class="light-beam"></div>
+    <div class="light-beam"></div>
+    <div class="light-beam"></div>
+    
+    <!-- 增强的背景几何元素 -->
+    <div class="bg-element"></div>
+    <div class="bg-element"></div>
+    <div class="bg-element"></div>
+    <div class="bg-element"></div>
+    
+    <div class="container">
+        <div class="name-container">
+            <div class="character" data-text="刘">刘</div>
+            <div class="character" data-text="兴">兴</div>
+            <div class="character" data-text="凯">凯</div>
+        </div>
+    </div>
+
+    <script>
+        // 增强的粒子系统
+        function createAdvancedParticles() {
+            const particleTypes = ['type-a', 'type-b', 'type-c'];
+            const particleCount = 25;
+            
+            for (let i = 0; i < particleCount; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = `particle ${particleTypes[Math.floor(Math.random() * particleTypes.length)]}`;
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 6 + 's';
+                    particle.style.animationDuration = (5 + Math.random() * 5) + 's';
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.remove();
+                        }
+                    }, 12000);
+                }, i * 120);
+            }
+        }
+        
+        // 持续创建粒子
+        setInterval(createAdvancedParticles, 3500);
+        createAdvancedParticles();
+        
+        // 大幅增强的交互效果
+        const characters = document.querySelectorAll('.character');
+        
+        characters.forEach((char, index) => {
+            char.addEventListener('mouseenter', () => {
+                char.style.transform = `scale(1.25) rotateY(${20 + index * 12}deg) rotateX(12deg) translateZ(120px)`;
+                char.style.zIndex = '20';
+                char.style.textShadow = `
+                    0 0 60px rgba(255,255,255,0.8),
+                    0 0 120px rgba(255,255,255,0.6),
+                    0 0 240px rgba(255,255,255,0.4)
+                `;
+            });
+            
+            char.addEventListener('mouseleave', () => {
+                char.style.transform = '';
+                char.style.zIndex = '';
+                char.style.textShadow = '';
+            });
+            
+            // 震撼的点击爆炸效果
+            char.addEventListener('click', () => {
+                char.style.animation = 'none';
+                char.style.transform = 'scale(1.8) rotateY(720deg) rotateX(360deg) translateZ(200px)';
+                char.style.textShadow = `
+                    0 0 100px rgba(255,255,255,1),
+                    0 0 200px rgba(255,255,255,0.8),
+                    0 0 400px rgba(255,255,255,0.6)
+                `;
+                
+                // 创建爆炸粒子
+                for (let i = 0; i < 30; i++) {
+                    const explodeParticle = document.createElement('div');
+                    explodeParticle.className = 'explosion-particle';
+                    const rect = char.getBoundingClientRect();
+                    explodeParticle.style.left = (rect.left + rect.width / 2) + 'px';
+                    explodeParticle.style.top = (rect.top + rect.height / 2) + 'px';
+                    explodeParticle.style.animation = `explode 2s ease-out forwards`;
+                    explodeParticle.style.animationDelay = Math.random() * 0.3 + 's';
+                    
+                    const angle = (i / 30) * 2 * Math.PI;
+                    const distance = 100 + Math.random() * 200;
+                    const x = Math.cos(angle) * distance;
+                    const y = Math.sin(angle) * distance;
+                    
+                    explodeParticle.style.setProperty('--x', x + 'px');
+                    explodeParticle.style.setProperty('--y', y + 'px');
+                    
+                    document.body.appendChild(explodeParticle);
+                    
+                    setTimeout(() => explodeParticle.remove(), 2500);
+                }
+                
+                setTimeout(() => {
+                    char.style.animation = '';
+                    char.style.transform = '';
+                    char.style.textShadow = '';
+                }, 2500);
+            });
+        });
+        
+        // 动态爆炸样式
+        const dynamicStyle = document.createElement('style');
+        dynamicStyle.textContent = `
+            @keyframes explode {
+                0% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(0);
+                }
+                50% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(2);
+                }
+            }
+        `;
+        document.head.appendChild(dynamicStyle);
+        
+        // 超级震撼的空格键效果
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                
+                // 全屏震撼闪光
+                const megaFlash = document.createElement('div');
+                megaFlash.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 50%, transparent 100%);
+                    z-index: 1000;
+                    animation: megaFlash 2s ease-out forwards;
+                `;
+                document.body.appendChild(megaFlash);
+                
+                setTimeout(() => megaFlash.remove(), 2000);
+                
+                characters.forEach((char, index) => {
+                    char.style.animation = 'none';
+                    char.style.transform = `
+                        scale(2.2) 
+                        rotateY(${1440 + index * 240}deg) 
+                        rotateX(${720}deg) 
+                        translateZ(400px)
+                    `;
+                    char.style.textShadow = `
+                        0 0 150px rgba(255,255,255,1),
+                        0 0 300px rgba(255,255,255,0.8),
+                        0 0 600px rgba(255,255,255,0.6)
+                    `;
+                    
+                    setTimeout(() => {
+                        char.style.animation = '';
+                        char.style.transform = '';
+                        char.style.textShadow = '';
+                    }, 4000);
+                });
+            }
+        });
+        
+        // 闪光效果
+        const flashStyle = document.createElement('style');
+        flashStyle.textContent = `
+            @keyframes megaFlash {
+                0% { opacity: 0; transform: scale(0); }
+                30% { opacity: 1; transform: scale(1); }
+                100% { opacity: 0; transform: scale(3); }
+            }
+        `;
+        document.head.appendChild(flashStyle);
+        
+        // 更敏感的3D鼠标跟随
+        document.addEventListener('mousemove', (e) => {
+            const container = document.querySelector('.container');
+            const rect = container.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            const deltaX = (e.clientX - centerX) / 12;
+            const deltaY = (e.clientY - centerY) / 12;
+            
+            container.style.transform = `
+                rotateY(${deltaX}deg) 
+                rotateX(${-deltaY}deg) 
+                translateZ(${Math.abs(deltaX) + Math.abs(deltaY)}px)
+            `;
+        });
+        
+        // 动态环境光变化
+        let colorPhase = 0;
+        setInterval(() => {
+            colorPhase += 0.01;
+            const hue = Math.sin(colorPhase) * 30 + 180;
+            const saturation = Math.abs(Math.sin(colorPhase * 0.5)) * 20 + 10;
+            
+            document.body.style.background = `
+                radial-gradient(circle at 20% 20%, hsla(${hue}, ${saturation}%, 15%, 0.8), transparent 50%),
+                radial-gradient(circle at 80% 80%, hsla(${hue + 60}, ${saturation}%, 15%, 0.6), transparent 50%),
+                radial-gradient(circle at 50% 50%, hsla(${hue + 120}, ${saturation}%, 15%, 0.4), transparent 70%),
+                #0a0a0a
+            `;
+        }, 100);
+    </script>
+</body>
+</html>
